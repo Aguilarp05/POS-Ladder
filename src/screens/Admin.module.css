@@ -1,0 +1,518 @@
+.admin {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding: 20px 24px;
+  gap: 16px;
+  background: var(--bg);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.salirBtn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 0.5px solid var(--border);
+  background: transparent;
+  color: var(--text-2);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.salirBtn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.tabs {
+  display: flex;
+  gap: 8px;
+}
+
+.tab {
+  padding: 8px 20px;
+  border-radius: 8px;
+  border: 0.5px solid var(--border);
+  background: transparent;
+  color: var(--text-2);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.tab:hover:not(.tabActive) {
+  background: var(--surface);
+  color: var(--text);
+}
+
+.tabActive {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
+.content {
+  flex: 1;
+  min-height: 0;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 100%;
+}
+
+.list {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.empty {
+  font-size: 13px;
+  color: var(--text-3);
+  padding: 20px 0;
+  text-align: center;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: var(--surface);
+  border-radius: 8px;
+  border: 0.5px solid var(--border);
+}
+
+.rowName {
+  flex: 1;
+  font-size: 13px;
+  color: var(--text);
+}
+
+.rowPrice {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--primary);
+  min-width: 44px;
+}
+
+.rowCat {
+  font-size: 11px;
+  color: var(--text-3);
+  background: var(--bg);
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 0.5px solid var(--border);
+}
+
+.editBtn {
+  padding: 5px 12px;
+  border-radius: 6px;
+  border: 0.5px solid var(--border);
+  background: transparent;
+  color: var(--text-2);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.editBtn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.deleteBtn {
+  padding: 5px 12px;
+  border-radius: 6px;
+  border: 0.5px solid var(--border);
+  background: transparent;
+  color: var(--danger);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.deleteBtn:hover {
+  background: var(--danger-light);
+  border-color: var(--danger);
+}
+
+.saveBtn {
+  padding: 5px 12px;
+  border-radius: 6px;
+  border: none;
+  background: var(--primary);
+  color: #fff;
+  font-size: 12px;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.saveBtn:hover {
+  opacity: 0.9;
+}
+
+.cancelEditBtn {
+  padding: 5px 12px;
+  border-radius: 6px;
+  border: 0.5px solid var(--border);
+  background: transparent;
+  color: var(--text-2);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.addRow {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 12px 14px;
+  background: var(--surface);
+  border-radius: 8px;
+  border: 0.5px solid var(--border);
+}
+
+.input {
+  flex: 1;
+  padding: 8px 10px;
+  border: 0.5px solid var(--border);
+  border-radius: 6px;
+  font-size: 13px;
+  background: var(--bg);
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.input:focus {
+  border-color: var(--primary);
+}
+
+.inputSmall {
+  width: 80px;
+  padding: 8px 10px;
+  border: 0.5px solid var(--border);
+  border-radius: 6px;
+  font-size: 13px;
+  background: var(--bg);
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.inputSmall:focus {
+  border-color: var(--primary);
+}
+
+.select {
+  padding: 8px 10px;
+  border: 0.5px solid var(--border);
+  border-radius: 6px;
+  font-size: 13px;
+  background: var(--bg);
+  color: var(--text);
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.select:focus {
+  border-color: var(--primary);
+}
+
+.addBtn {
+  padding: 8px 16px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.15s;
+}
+
+.addBtn:hover {
+  opacity: 0.9;
+}
+
+.toggleBtnOn {
+  padding: 5px 12px;
+  border-radius: 6px;
+  border: 0.5px solid var(--primary);
+  background: var(--primary);
+  color: #fff;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.toggleBtnOff {
+  padding: 5px 12px;
+  border-radius: 6px;
+  border: 0.5px solid var(--border);
+  background: transparent;
+  color: var(--text-3);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+} 
+
+.passForm {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 400px;
+}
+
+.passError {
+  font-size: 12px;
+  color: var(--danger);
+}
+
+.passOk {
+  font-size: 12px;
+  color: var(--success);
+}
+
+.productoBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.recetaBtn {
+  padding: 5px 12px;
+  border-radius: 6px;
+  border: 0.5px solid var(--primary);
+  background: transparent;
+  color: var(--primary);
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.recetaBtn:hover {
+  background: var(--primary);
+  color: #fff;
+}
+
+.recetaPanel {
+  background: var(--bg);
+  border: 0.5px solid var(--border);
+  border-radius: 8px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-left: 12px;
+}
+
+.recetaTitle {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-2);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.recetaRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+  border-bottom: 0.5px solid var(--border);
+}
+
+.recetaNombre {
+  flex: 1;
+  font-size: 13px;
+  color: var(--text);
+}
+
+.recetaCantidad {
+  font-size: 12px;
+  color: var(--primary);
+  font-weight: 500;
+}
+
+.recetaAddRow {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.rowStock {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--success);
+  min-width: 60px;
+}
+
+.rowStockBajo {
+  color: var(--danger);
+}
+
+.ingEditForm {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  flex: 1;
+}
+
+.ingAddForm {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 14px;
+  background: var(--surface);
+  border-radius: 8px;
+  border: 0.5px solid var(--border);
+}
+
+.selectSmall {
+  padding: 8px 10px;
+  border: 0.5px solid var(--border);
+  border-radius: 6px;
+  font-size: 12px;
+  background: var(--bg);
+  color: var(--text);
+  outline: none;
+  cursor: pointer;
+}
+
+.alertaBajo {
+  font-size: 11px;
+  color: var(--danger);
+  font-weight: 500;
+} 
+
+.buscador {
+  padding: 7px 10px;
+  border: 0.5px solid var(--border);
+  border-radius: 6px;
+  font-size: 13px;
+  background: var(--bg);
+  color: var(--text);
+  outline: none;
+  width: 100%;
+  transition: border-color 0.15s;
+}
+
+.buscador:focus {
+  border-color: var(--primary);
+}
+
+.buscador::placeholder {
+  color: var(--text-3);
+}
+
+.ingLabel {
+  font-size: 12px;
+  color: var(--text-2);
+  white-space: nowrap;
+  padding: 8px 0;
+}
+.ingTopBar {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.toggleFormBtn {
+  padding: 7px 14px;
+  border-radius: 6px;
+  border: 0.5px solid var(--primary);
+  background: transparent;
+  color: var(--primary);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s;
+}
+
+.toggleFormBtn:hover {
+  background: var(--primary);
+  color: #fff;
+}
+
+.historialBtn {
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 0.5px solid var(--border);
+  background: transparent;
+  color: var(--text-2);
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: inherit;
+}
+
+.historialBtn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.historialPanel {
+  background: var(--bg);
+  border: 0.5px solid var(--border);
+  border-radius: 8px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-left: 12px;
+}
+
+.historialRow {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-bottom: 8px;
+  border-bottom: 0.5px solid var(--border);
+}
+
+.historialFecha {
+  font-size: 11px;
+  color: var(--text-3);
+}
+
+.historialCambios {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.historialCambio {
+  font-size: 12px;
+  color: var(--text);
+}
+
+.rowPrecioEmp {
+  font-size: 11px;
+  color: var(--success);
+  background: var(--success-light);
+  padding: 2px 8px;
+  border-radius: 999px;
+}

@@ -1,0 +1,923 @@
+.pos {
+  display: grid;
+  grid-template-columns: 1fr 290px;
+  height: 100vh;
+  gap: 10px;
+  padding: 10px;
+  background: var(--bg);
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 0;
+}
+
+.topbar {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  background: var(--surface);
+  border: 0.5px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+.catBtn {
+  flex: 1;
+  padding: 9px 8px;
+  border-radius: 8px;
+  border: 0.5px solid var(--border);
+  background: transparent;
+  color: var(--text-2);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.catBtn:hover:not(.catActive) {
+  background: var(--bg);
+  color: var(--text);
+}
+
+.catActive {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
+.adminBtn {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 0.5px solid var(--border);
+  background: transparent;
+  color: var(--text-2);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.adminBtn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.menuArea {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  overflow-y: auto;
+  flex: 1;
+  align-content: start;
+}
+
+.listItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 12px;
+  background: var(--surface);
+  border-radius: 10px;
+  border: 0.5px solid var(--border);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.listItem:hover {
+  border-color: var(--primary);
+  background: var(--bg);
+}
+
+.listItemPending {
+  border-color: var(--primary);
+  background: var(--bg);
+}
+
+.listDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--primary);
+  flex-shrink: 0;
+}
+
+.listName {
+  flex: 1;
+  font-size: 13px;
+  color: var(--text);
+  font-weight: 500;
+}
+
+.listPrice {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.listAdd {
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  border: 0.5px solid var(--primary);
+  background: transparent;
+  color: var(--primary);
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+
+.listAdd:hover {
+  background: var(--primary);
+  color: #fff;
+}
+
+.extrasPanel {
+  background: var(--surface);
+  border-radius: 10px;
+  border: 0.5px solid var(--border);
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.extrasHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.extrasTitle {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-2);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.extrasSel {
+  font-size: 11px;
+  color: var(--primary);
+  font-style: italic;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chip {
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 0.5px solid var(--border);
+  background: transparent;
+  color: var(--text-2);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.chip:hover:not(.chipOn) {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.chipOn {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+  font-weight: 500;
+}
+
+.agregarBtn {
+  align-self: flex-start;
+  padding: 7px 18px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.agregarBtn:hover {
+  opacity: 0.9;
+}
+
+.right {
+  background: var(--surface);
+  border-radius: 12px;
+  border: 0.5px solid var(--border);
+  display: flex;
+  flex-direction: column;
+}
+
+.orderHeader {
+  padding: 12px 14px 10px;
+  border-bottom: 0.5px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.orderTitle {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.orderSub {
+  font-size: 11px;
+  color: var(--text-2);
+  margin-top: 2px;
+}
+
+.clearBtn {
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 0.5px solid var(--border);
+  background: transparent;
+  color: var(--text-2);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.clearBtn:hover {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+.orderItems {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.orderEmpty {
+  color: var(--text-3);
+  font-size: 12px;
+  text-align: center;
+  padding: 30px 0;
+}
+
+.orderRow {
+  border-bottom: 0.5px solid var(--border);
+  padding-bottom: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.orderRowMain {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.rowName {
+  flex: 1;
+  font-size: 12px;
+  color: var(--text);
+}
+
+.qtyCtrl {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.qtyBtn {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 0.5px solid var(--border-med);
+  background: transparent;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text);
+  transition: all 0.1s;
+}
+
+.qtyBtn:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
+.qtyNum {
+  font-size: 12px;
+  font-weight: 500;
+  min-width: 14px;
+  text-align: center;
+  color: var(--text);
+}
+
+.rowPrice {
+  font-size: 12px;
+  font-weight: 600;
+  min-width: 40px;
+  text-align: right;
+  color: var(--text);
+}
+
+.delBtn {
+  background: none;
+  border: none;
+  font-size: 12px;
+  color: var(--text-3);
+  cursor: pointer;
+  padding: 2px;
+  transition: color 0.1s;
+}
+
+.delBtn:hover {
+  color: var(--danger);
+}
+
+.rowExtras {
+  font-size: 10px;
+  color: var(--text-3);
+  font-style: italic;
+}
+
+.orderFooter {
+  padding: 12px 14px;
+  border-top: 0.5px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.totalRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.cobrarBtn {
+  width: 100%;
+  padding: 12px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.cobrarBtn:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.cobrarBtn:disabled {
+  background: var(--border);
+  color: var(--text-3);
+  cursor: default;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.modal {
+  background: var(--surface);
+  border-radius: 14px;
+  padding: 22px 20px;
+  width: 310px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.modalTitle {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.modalTotal {
+  font-size: 32px;
+  font-weight: 500;
+  color: var(--primary);
+  text-align: center;
+}
+
+.methodGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.methodBtn {
+  padding: 14px 8px;
+  border-radius: 8px;
+  border: 0.5px solid var(--border);
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.methodBtn:hover {
+  border-color: var(--primary);
+  background: var(--surface);
+}
+
+.methodLabel {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.methodNote {
+  font-size: 10px;
+  color: var(--text-3);
+}
+
+.cancelBtn {
+  background: none;
+  border: none;
+  font-size: 12px;
+  color: var(--text-2);
+  cursor: pointer;
+  text-align: center;
+}
+
+.cancelBtn:hover {
+  color: var(--text);
+}
+
+.confirmBtn {
+  width: 100%;
+  padding: 11px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.confirmBtn:hover {
+  opacity: 0.9;
+}
+
+.cambioRow {
+  display: flex;
+  justify-content: space-between;
+  background: var(--bg);
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 13px;
+  color: var(--text-2);
+}
+
+.cambioVal {
+  font-weight: 500;
+  color: var(--success);
+}
+
+.pagoInput {
+  width: 100%;
+  font-size: 24px;
+  font-weight: 500;
+  text-align: center;
+  border: none;
+  border-bottom: 2px solid var(--primary);
+  padding: 4px 0;
+  background: transparent;
+  color: var(--text);
+  outline: none;
+}
+
+.successPanel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+}
+
+.successIcon {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: var(--success-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: var(--success);
+}
+
+.empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  color: var(--text-2);
+  font-size: 14px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  overflow-y: auto;
+  flex: 1;
+  align-content: start;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 12px;
+  background: var(--surface);
+  border-radius: 10px;
+  border: 0.5px solid var(--border);
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: left;
+}
+
+.card:hover {
+  border-color: var(--primary);
+  background: var(--bg);
+}
+
+.cardPending {
+  border-color: var(--primary);
+  background: var(--bg);
+}
+
+.cardName {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.3;
+}
+
+.cardPrice {
+  font-size: 12px;
+  color: var(--primary);
+}
+
+.notaInput {
+  width: 100%;
+  padding: 7px 10px;
+  border: 0.5px solid var(--border);
+  border-radius: 6px;
+  font-size: 12px;
+  background: var(--bg);
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.notaInput:focus {
+  border-color: var(--primary);
+}
+
+.notaInput::placeholder {
+  color: var(--text-3);
+}
+
+.extrasList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.extraRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 0;
+  border-bottom: 0.5px solid var(--border);
+}
+
+.extraNombre {
+  flex: 1;
+  font-size: 13px;
+  color: var(--text);
+}
+
+.extraPrecio {
+  font-size: 12px;
+  color: var(--primary);
+  min-width: 36px;
+  text-align: right;
+}
+
+.extraQtyCtrl {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.extraQtyBtn {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 0.5px solid var(--border-med);
+  background: transparent;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text);
+  transition: all 0.1s;
+}
+
+.extraQtyBtn:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
+.extraQtyNum {
+  font-size: 13px;
+  font-weight: 500;
+  min-width: 16px;
+  text-align: center;
+  color: var(--text);
+}
+
+.orderRowPreview {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-bottom: 8px;
+  border-bottom: 0.5px dashed var(--border);
+  opacity: 0.5;
+}
+
+.turnoIndicador {
+  display: flex;
+  align-items: center;
+  margin-right: 4px;
+}
+
+.turnoBadge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: var(--primary);
+  color: #fff;
+  white-space: nowrap;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.cats {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: var(--surface);
+  border: 0.5px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+.catsRow {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.cats {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: var(--surface);
+  border: 0.5px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+.catsRow {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.emptyTitle {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.emptySubtitle {
+  font-size: 14px;
+  color: var(--text-2);
+}
+
+.emptyHint {
+  font-size: 13px;
+  color: var(--text-3);
+}
+
+.turnoIndicador {
+  display: flex;
+  align-items: center;
+}
+
+.turnoBadge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: var(--primary);
+  color: #fff;
+  white-space: nowrap;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.pagosLista {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pagoRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  background: var(--bg);
+  border-radius: 8px;
+}
+
+.pagoMetodo {
+  flex: 1;
+  font-size: 13px;
+  color: var(--text);
+}
+
+.pagoMonto {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--primary);
+}
+
+.pagoRemove {
+  background: none;
+  border: none;
+  font-size: 12px;
+  color: var(--text-3);
+  cursor: pointer;
+  padding: 2px 4px;
+  transition: color 0.1s;
+}
+
+.pagoRemove:hover {
+  color: var(--danger);
+}
+
+.pagoResumen {
+  margin-top: 4px;
+}
+
+.faltanteRow {
+  display: flex;
+  justify-content: space-between;
+  background: var(--danger-light);
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 13px;
+  color: var(--text-2);
+}
+
+.faltanteVal {
+  font-weight: 500;
+  color: var(--danger);
+}
+
+.agregarPagoRow {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.pagoSelect {
+  flex: 1;
+  padding: 8px 10px;
+  border: 0.5px solid var(--border);
+  border-radius: 8px;
+  font-size: 13px;
+  background: var(--bg);
+  color: var(--text);
+  outline: none;
+  cursor: pointer;
+}
+
+.pagoInput {
+  width: 90px;
+  padding: 8px 10px;
+  border: 0.5px solid var(--border);
+  border-radius: 8px;
+  font-size: 13px;
+  background: var(--bg);
+  color: var(--text);
+  outline: none;
+}
+
+.pagoInput:focus {
+  border-color: var(--primary);
+}
+
+.pagoAddBtn {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: none;
+  background: var(--primary);
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.15s;
+}
+
+.pagoAddBtn:hover {
+  opacity: 0.9;
+}
+
+.empleadoToggleRow {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 6px 0;
+}
+
+.empleadoToggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-2);
+  cursor: pointer;
+}
+
+.empleadoToggle input {
+  cursor: pointer;
+  accent-color: var(--primary);
+}
+
+.precioEmpTag {
+  font-size: 10px;
+  color: var(--success);
+  font-weight: 600;
+}

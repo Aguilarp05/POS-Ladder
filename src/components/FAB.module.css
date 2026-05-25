@@ -1,0 +1,167 @@
+.wrapper {
+  position: fixed;
+  bottom: 45px;
+  left: 24px;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.fab {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: var(--primary);
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  transition: all 0.2s;
+}
+
+.fab:hover {
+  opacity: 0.9;
+  transform: scale(1.05);
+}
+
+.fabAbierto {
+  background: var(--text-2);
+}
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+}
+
+.opciones {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 8px;
+  animation: fadeUp 0.15s ease;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.opcion {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 0.5px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: all 0.15s;
+  text-align: left;
+}
+
+.opcion:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.opcionActive {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
+.fabWrapper {
+  position: relative;
+}
+
+.badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--danger);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.jornadaBtn {
+  width: 100%;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 0.5px solid var(--primary);
+  background: var(--primary);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s;
+}
+
+.jornadaBtn:hover {
+  opacity: 0.9;
+}
+
+.jornadaBtnCerrar {
+  background: var(--danger);
+  border-color: var(--danger);
+}
+
+.confirmar {
+  background: var(--surface);
+  border: 0.5px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 200px;
+}
+
+.confirmarText {
+  font-size: 13px;
+  color: var(--text);
+  font-weight: 500;
+}
+
+.confirmarBtns {
+  display: flex;
+  gap: 6px;
+}
+
+.confirmarSi {
+  flex: 1;
+  padding: 7px;
+  border-radius: 6px;
+  border: none;
+  background: var(--primary);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.confirmarNo {
+  flex: 1;
+  padding: 7px;
+  border-radius: 6px;
+  border: 0.5px solid var(--border);
+  background: transparent;
+  color: var(--text-2);
+  font-size: 12px;
+  cursor: pointer;
+}

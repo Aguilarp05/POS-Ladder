@@ -1,0 +1,188 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding: 20px 24px;
+  gap: 16px;
+  background: var(--bg);
+  overflow-y: auto;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.periodos {
+  display: flex;
+  gap: 8px;
+}
+
+.periodoBtn {
+  padding: 8px 20px;
+  border-radius: 8px;
+  border: 0.5px solid var(--border);
+  background: transparent;
+  color: var(--text-2);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.periodoBtn:hover:not(.periodoActive) {
+  background: var(--surface);
+  color: var(--text);
+}
+
+.periodoActive {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
+.empty {
+  font-size: 13px;
+  color: var(--text-3);
+  text-align: center;
+  padding: 40px 0;
+}
+
+.tarjetas {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.tarjeta {
+  background: var(--surface);
+  border: 0.5px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tarjetaLabel {
+  font-size: 12px;
+  color: var(--text-2);
+}
+
+.tarjetaVal {
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--primary);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  padding-bottom: 80px;
+}
+
+.card {
+  background: var(--surface);
+  border: 0.5px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cardTitle {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  border-bottom: 0.5px solid var(--border);
+  padding-bottom: 8px;
+}
+
+.cardEmpty {
+  font-size: 12px;
+  color: var(--text-3);
+  text-align: center;
+  padding: 12px 0;
+}
+
+.rankRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+  border-bottom: 0.5px solid var(--border);
+}
+
+.rankNombre {
+  flex: 1;
+  font-size: 13px;
+  color: var(--text);
+}
+
+.rankCantidad {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-2);
+  min-width: 30px;
+  text-align: right;
+}
+
+.rankTotal {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--primary);
+  min-width: 60px;
+  text-align: right;
+}
+
+.grafica {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  height: 140px;
+  padding-top: 20px;
+}
+
+.barraCol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+  height: 100%;
+}
+
+.barraMonto {
+  font-size: 9px;
+  color: var(--text-3);
+  white-space: nowrap;
+}
+
+.barraWrapper {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+}
+
+.barra {
+  width: 100%;
+  background: var(--primary);
+  border-radius: 4px 4px 0 0;
+  min-height: 4px;
+  transition: height 0.3s ease;
+}
+
+.barraHora {
+  font-size: 10px;
+  color: var(--text-3);
+}
