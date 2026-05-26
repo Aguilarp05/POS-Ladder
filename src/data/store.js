@@ -10,6 +10,7 @@ const DEFAULTS = {
     { id: '2', nombre: 'Tarjeta',  activo: true },
   ],
   password: '1234',
+  gastos: [],
 }
 
 function load() {
@@ -260,16 +261,18 @@ export function descontarInventario(orden) {
 }
 
 // Pedidos
-export function guardarPedido(orden, total, metodoPago) {
+export function guardarPedido(orden, total, metodoPago, montoDidi) {
   const data = load()
   if (!data.pedidos) data.pedidos = []
-  data.pedidos.push({
+  const pedido = {
     id: Date.now().toString(),
     fecha: new Date().toISOString(),
     orden,
     total,
     metodoPago,
-  })
+  }
+  if (montoDidi !== undefined) pedido.montoDidi = montoDidi
+  data.pedidos.push(pedido)
   save(data)
 }
 
@@ -356,7 +359,7 @@ export function getJornadaActual() {
   return data.jornadas.find(j => !j.cerrada) || null
 }
 
-export function abrirJornada() {
+export function abrirJornada(fondoInicial = 0) {
   const data = load()
   if (!data.jornadas) data.jornadas = []
   data.jornadas.push({
@@ -366,8 +369,29 @@ export function abrirJornada() {
     cerrada: false,
     totalVentas: 0,
     numPedidos: 0,
+    fondoInicial: parseFloat(fondoInicial) || 0,
   })
   save(data)
+}
+
+export function registrarGasto(concepto, monto) {
+  const data = load()
+  if (!data.gastos) data.gastos = []
+  data.gastos.push({
+    id: Date.now().toString(),
+    fecha: new Date().toISOString(),
+    concepto: concepto.trim(),
+    monto: parseFloat(monto) || 0,
+  })
+  save(data)
+}
+
+export function getGastosByFecha(fecha) {
+  const data = load()
+  if (!data.gastos) return []
+  return data.gastos.filter(g =>
+    new Date(g.fecha).toISOString().split('T')[0] === fecha
+  )
 }
 
 export function cerrarJornada() {

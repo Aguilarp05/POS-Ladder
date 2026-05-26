@@ -1,22 +1,25 @@
 const { app, BrowserWindow } = require('electron')
 const path = require('path')
 
-const isDev = process.env.NODE_ENV !== 'production'
+const isDev = !app.isPackaged
 
 function createWindow() {
-  const iconExt = process.platform === 'win32' ? 'ico' : process.platform === 'darwin' ? 'icns' : 'png'
   const win = new BrowserWindow({
     width: 1280,
     height: 800,
     minWidth: 900,
     minHeight: 600,
     title: 'Ladder',
-    icon: path.join(__dirname, `../assets/Ladder_logo.${iconExt}`),
+    icon: process.platform === 'win32'
+      ? path.join(__dirname, 'assets/Ladder_logo.ico')
+      : undefined,
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
     },
   })
+
+  win.maximize()
 
   if (isDev) {
     win.loadURL('http://localhost:5173')

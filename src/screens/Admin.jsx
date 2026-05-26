@@ -326,11 +326,48 @@ export default function Admin({ onSalir }) {
     return false
   }
 
+  function handleExportar() {
+    const data = localStorage.getItem('pos-data')
+    if (!data) return
+    const blob = new Blob([data], { type: 'application/json' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `ladder-backup-${new Date().toISOString().split('T')[0]}.json`
+    a.click()
+    URL.revokeObjectURL(url)
+  }
+
+  function handleImportar(e) {
+    const file = e.target.files[0]
+    if (!file) return
+    const reader = new FileReader()
+    reader.onload = (evt) => {
+      try {
+        const data = JSON.parse(evt.target.result)
+        if (typeof data !== 'object' || !data.productos) throw new Error()
+        localStorage.setItem('pos-data', JSON.stringify(data))
+        window.location.reload()
+      } catch {
+        alert('Archivo inválido — asegúrate de que sea un backup de Ladder')
+      }
+    }
+    reader.readAsText(file)
+    e.target.value = ''
+  }
+
   return (
     <div className={styles.admin}>
       <div className={styles.header}>
         <h1 className={styles.title}>Panel Admin</h1>
-        <button className={styles.salirBtn} onClick={onSalir}>← Volver a caja</button>
+        <div className={styles.headerActions}>
+          <button className={styles.exportBtn} onClick={handleExportar}>↓ Exportar datos</button>
+          <label className={styles.importBtn}>
+            ↑ Importar datos
+            <input type="file" accept=".json" style={{ display: 'none' }} onChange={handleImportar} />
+          </label>
+          <button className={styles.salirBtn} onClick={onSalir}>← Volver a caja</button>
+        </div>
       </div>
 
       <div className={styles.tabs}>

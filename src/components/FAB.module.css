@@ -98,6 +98,46 @@
   justify-content: center;
 }
 
+.fabAdmin {
+  outline: 2px solid #f59e0b;
+  outline-offset: 2px;
+}
+
+.adminBadge {
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #f59e0b;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.desactivarAdminBtn {
+  width: 100%;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 0.5px solid #f59e0b;
+  background: transparent;
+  color: #f59e0b;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s;
+}
+
+.desactivarAdminBtn:hover {
+  background: #f59e0b;
+  color: #fff;
+}
+
 .jornadaBtn {
   width: 100%;
   padding: 8px 14px;
@@ -130,6 +170,40 @@
   flex-direction: column;
   gap: 10px;
   width: 200px;
+}
+
+.fondoInput {
+  width: 100%;
+  padding: 7px 10px;
+  border: 0.5px solid var(--border);
+  border-radius: 6px;
+  font-size: 13px;
+  background: var(--bg);
+  color: var(--text);
+  outline: none;
+}
+
+.fondoInput:focus {
+  border-color: var(--primary);
+}
+
+.gastoBtn {
+  width: 100%;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 0.5px solid var(--border);
+  background: transparent;
+  color: var(--text-2);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s;
+}
+
+.gastoBtn:hover {
+  border-color: var(--danger);
+  color: var(--danger);
 }
 
 .confirmarText {

@@ -25,17 +25,21 @@
     "appId": "com.ladder.pos",
     "productName": "Ladder",
     "directories": { "output": "dist-electron" },
+    "files": [
+      "dist/**",
+      "electron/**",
+      "assets/**"
+    ],
     "win": {
       "target": "nsis",
-      "icon": "assets/Ladder_logo.ico"
+      "icon": "electron/assets/Ladder_logo.ico"
     },
     "mac": {
       "target": "dmg",
-      "icon": "assets/Ladder_logo.icns"
+      "identity": null
     },
     "linux": {
-      "target": "AppImage",
-      "icon": "assets/Ladder_logo.png"
+      "target": "AppImage"
     }
   }
 }

@@ -19,6 +19,44 @@
   color: var(--text);
 }
 
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.exportBtn {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 0.5px solid var(--border);
+  background: transparent;
+  color: var(--text-2);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.exportBtn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.importBtn {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 0.5px solid var(--border);
+  background: transparent;
+  color: var(--text-2);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.importBtn:hover {
+  border-color: var(--success);
+  color: var(--success);
+}
+
 .salirBtn {
   padding: 8px 16px;
   border-radius: 8px;

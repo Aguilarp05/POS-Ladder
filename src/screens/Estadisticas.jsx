@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { getPedidos, getPedidosPorTurno } from '../data/store'
 import FAB from '../components/FAB'
 import styles from './Estadisticas.module.css'
@@ -48,9 +48,13 @@ function esTurno(fecha, turno) {
   return true
 }
 
-export default function Estadisticas({ onNavigate }) {
+export default function Estadisticas({ onNavigate, modoAdmin, onDesactivarAdmin }) {
   const [periodo, setPeriodo] = useState('dia')
   const [turno, setTurno] = useState('ambos')
+
+  useEffect(() => {
+    if (!modoAdmin && periodo !== 'dia') setPeriodo('dia')
+  }, [modoAdmin])
 
   const todosPedidos = getPedidos()
 
@@ -117,7 +121,7 @@ export default function Estadisticas({ onNavigate }) {
       </div>
 
       <div className={styles.periodos}>
-        {PERIODOS.map(p => (
+        {(modoAdmin ? PERIODOS : PERIODOS.filter(p => p.key === 'dia')).map(p => (
           <button
             key={p.key}
             className={`${styles.periodoBtn} ${periodo === p.key ? styles.periodoActive : ''}`}
@@ -224,6 +228,8 @@ export default function Estadisticas({ onNavigate }) {
       <FAB
         pantallaActual="estadisticas"
         onNavigate={onNavigate}
+        modoAdmin={modoAdmin}
+        onDesactivarAdmin={onDesactivarAdmin}
       />
     </div>
   )

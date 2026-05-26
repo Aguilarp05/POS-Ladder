@@ -12,6 +12,8 @@ export default function App() {
   const [pantalla, setPantalla] = useState('caja')
   const [showLogin, setShowLogin] = useState(false)
   const [alertaInicio, setAlertaInicio] = useState([])
+  const [modoAdmin, setModoAdmin] = useState(false)
+  const [loginParaPanel, setLoginParaPanel] = useState(false)
 
   useEffect(() => {
     const bajos = getIngredientesBajos()
@@ -20,7 +22,12 @@ export default function App() {
 
   function handleNavigate(destino) {
     if (destino === 'admin') {
-      setShowLogin(true)
+      if (modoAdmin) {
+        setPantalla('admin')
+      } else {
+        setLoginParaPanel(false)
+        setShowLogin(true)
+      }
     } else {
       setPantalla(destino)
     }
@@ -28,23 +35,36 @@ export default function App() {
 
   function handleLoginExitoso() {
     setShowLogin(false)
-    setPantalla('admin')
+    setModoAdmin(true)
+    if (loginParaPanel) {
+      setPantalla('admin')
+      setLoginParaPanel(false)
+    }
   }
 
-  function handleSalir() {
+  function handleVolver() {
     setPantalla('caja')
   }
 
+  function handleDesactivarAdmin() {
+    setModoAdmin(false)
+  }
+
   function irAAdmin() {
-    setPantalla('admin')
+    if (modoAdmin) {
+      setPantalla('admin')
+    } else {
+      setLoginParaPanel(true)
+      setShowLogin(true)
+    }
   }
 
   return (
     <div className={styles.app}>
-      {pantalla === 'caja' && <POS onIrAdmin={irAAdmin} onNavigate={handleNavigate} />}
-      {pantalla === 'historial' && <Historial onVolver={handleSalir} onNavigate={handleNavigate} />}
-      {pantalla === 'admin' && <Admin onSalir={handleSalir} onNavigate={handleNavigate} />}
-      {pantalla === 'estadisticas' && <Estadisticas onNavigate={handleNavigate} />}
+      {pantalla === 'caja' && <POS onIrAdmin={irAAdmin} onNavigate={handleNavigate} modoAdmin={modoAdmin} onDesactivarAdmin={handleDesactivarAdmin} />}
+      {pantalla === 'historial' && <Historial onVolver={handleVolver} onNavigate={handleNavigate} modoAdmin={modoAdmin} onDesactivarAdmin={handleDesactivarAdmin} />}
+      {pantalla === 'admin' && <Admin onSalir={handleVolver} onNavigate={handleNavigate} />}
+      {pantalla === 'estadisticas' && <Estadisticas onNavigate={handleNavigate} modoAdmin={modoAdmin} onDesactivarAdmin={handleDesactivarAdmin} />}
 
       {showLogin && (
         <LoginModal

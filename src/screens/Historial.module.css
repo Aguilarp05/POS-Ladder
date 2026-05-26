@@ -115,6 +115,12 @@
   color: var(--primary);
 }
 
+.didiMonto {
+  font-size: 12px;
+  font-weight: 400;
+  color: #f97316;
+}
+
 .pedidoItems {
   display: flex;
   flex-wrap: wrap;
@@ -245,4 +251,96 @@
   background: var(--primary);
   border-color: var(--primary);
   color: #fff;
+}
+
+.flujo {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: auto;
+}
+
+.flujoSeccion {
+  background: var(--surface);
+  border: 0.5px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.flujoTitulo {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-2);
+  margin-bottom: 2px;
+}
+
+.flujoFila {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 13px;
+  color: var(--text);
+}
+
+.flujoLabel {
+  color: var(--text-2);
+}
+
+.flujoVal {
+  font-weight: 500;
+}
+
+.flujoValNeg {
+  font-weight: 500;
+  color: var(--danger);
+}
+
+.flujoValGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.flujoSub {
+  font-size: 11px;
+  color: var(--text-3);
+}
+
+.flujoSubtotal {
+  border-top: 0.5px solid var(--border);
+  padding-top: 8px;
+  font-weight: 500;
+}
+
+.flujoVacio {
+  font-size: 12px;
+  color: var(--text-3);
+  font-style: italic;
+}
+
+.flujoTotal {
+  background: var(--primary);
+  border-radius: 10px;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.flujoTotalPos {
+  font-size: 18px;
+}
+
+.flujoTotalNeg {
+  font-size: 18px;
+  color: #fca5a5;
 }

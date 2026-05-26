@@ -210,6 +210,29 @@
   font-weight: 500;
 }
 
+.extrasPanelBtns {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.cancelarBtn {
+  padding: 7px 14px;
+  background: transparent;
+  color: var(--text-2);
+  border: 0.5px solid var(--border);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.cancelarBtn:hover {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
 .agregarBtn {
   align-self: flex-start;
   padding: 7px 18px;
@@ -307,6 +330,26 @@
   color: var(--text);
 }
 
+.orderRowName {
+  flex: 1;
+  font-size: 12px;
+  color: var(--text);
+}
+
+.orderRowPrice {
+  font-size: 12px;
+  font-weight: 600;
+  min-width: 40px;
+  text-align: right;
+  color: var(--text);
+}
+
+.orderRowExtras {
+  font-size: 10px;
+  color: var(--text-3);
+  font-style: italic;
+}
+
 .qtyCtrl {
   display: flex;
   align-items: center;
@@ -348,6 +391,38 @@
   min-width: 40px;
   text-align: right;
   color: var(--text);
+}
+
+.editBtn {
+  background: none;
+  border: none;
+  font-size: 13px;
+  color: var(--text-3);
+  cursor: pointer;
+  padding: 0 3px;
+  flex-shrink: 0;
+  transition: color 0.1s;
+  line-height: 1;
+}
+
+.editBtn:hover {
+  color: var(--primary);
+}
+
+.cancelPendingBtn {
+  background: none;
+  border: none;
+  font-size: 12px;
+  color: var(--text-3);
+  cursor: pointer;
+  padding: 2px;
+  transition: color 0.1s;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.cancelPendingBtn:hover {
+  color: var(--danger);
 }
 
 .delBtn {
@@ -490,6 +565,31 @@
   color: var(--text);
 }
 
+.didiBtn {
+  width: 100%;
+  padding: 10px;
+  background: transparent;
+  border: 1.5px solid #f97316;
+  border-radius: 8px;
+  color: #f97316;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.didiBtn:hover {
+  background: #f97316;
+  color: #fff;
+}
+
+.didiLabel {
+  font-size: 13px;
+  color: var(--text-2);
+  text-align: center;
+  margin: 0;
+}
+
 .confirmBtn {
   width: 100%;
   padding: 11px;
@@ -502,8 +602,13 @@
   cursor: pointer;
 }
 
-.confirmBtn:hover {
+.confirmBtn:hover:not(:disabled) {
   opacity: 0.9;
+}
+
+.confirmBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
 }
 
 .cambioRow {

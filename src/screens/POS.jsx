@@ -6,7 +6,7 @@ import styles from './POS.module.css'
 
 let uidCounter = 0
 
-export default function POS({ onIrAdmin, onNavigate }) {
+export default function POS({ onIrAdmin, onNavigate, modoAdmin, onDesactivarAdmin }) {
   const [categorias, setCategorias] = useState([])
   const [productos, setProductos] = useState([])
   const [extras, setExtras] = useState([])
@@ -25,6 +25,9 @@ export default function POS({ onIrAdmin, onNavigate }) {
   const [jornada, setJornada] = useState(getJornadaActual())
   const [esEmpleado, setEsEmpleado] = useState(false)
   const [comidaEmpleado, setComidaEmpleado] = useState(false)
+  const [isDidiMode, setIsDidiMode] = useState(false)
+  const [didiMonto, setDidiMonto] = useState('')
+  const [editingRow, setEditingRow] = useState(null)
 
   useEffect(() => {
     const cats = getCategorias()
@@ -70,13 +73,39 @@ export default function POS({ onIrAdmin, onNavigate }) {
   const cambio = efectivoPagado > 0 ? Math.max(0, totalPagado - total) : 0
 
   function handleSelectItem(producto) {
+    if (editingRow) {
+      setOrder(prev => [...prev, editingRow])
+      setEditingRow(null)
+    }
     if (extrasCat.length > 0) {
       setPendingItem(producto)
       setSelectedExtras({})
       setNota('')
     } else {
       addToOrder(producto, {}, '')
+      setPendingItem(null)
     }
+  }
+
+  function handleCancelPending() {
+    if (editingRow) {
+      setOrder(prev => [...prev, editingRow])
+      setEditingRow(null)
+    }
+    setPendingItem(null)
+    setSelectedExtras({})
+    setNota('')
+  }
+
+  function handleEditItem(row) {
+    setEditingRow(row)
+    setOrder(prev => prev.filter(o => o.uid !== row.uid))
+    setCat(row.producto.categoriaId)
+    setPendingItem(row.producto)
+    const extrasObj = {}
+    row.extrasDetalle.forEach(e => { extrasObj[e.id] = e.qty })
+    setSelectedExtras(extrasObj)
+    setNota(row.nota || '')
   }
 
   function handleChangeExtraCantidad(extraId, delta) {
@@ -96,6 +125,7 @@ export default function POS({ onIrAdmin, onNavigate }) {
     setPendingItem(null)
     setSelectedExtras({})
     setNota('')
+    setEditingRow(null)
   }
 
   function addToOrder(producto, extrasSeleccionados, nota) {
@@ -145,6 +175,7 @@ export default function POS({ onIrAdmin, onNavigate }) {
     setNota('')
     setEsEmpleado(false)
     setComidaEmpleado(false)
+    setEditingRow(null)
   }
 
   function handleAgregarPago() {
@@ -174,12 +205,33 @@ export default function POS({ onIrAdmin, onNavigate }) {
     setPagos([])
     setPagoMetodo('')
     setPagoMonto('')
+    setIsDidiMode(false)
+    setDidiMonto('')
+  }
+
+  function handleConfirmDidi() {
+    const monto = parseFloat(didiMonto)
+    if (!monto || monto <= 0) return
+    descontarInventario(order)
+    guardarPedido(order, total, 'DiDi Efectivo', monto)
+    const bajos = getIngredientesBajos()
+    if (bajos.length > 0) setAlertaStock(bajos)
+    handleClear()
+    setShowPayment(false)
+    setStepPago('method')
+    setPagos([])
+    setPagoMetodo('')
+    setPagoMonto('')
+    setIsDidiMode(false)
+    setDidiMonto('')
   }
 
   function handleOpenPayment() {
     setPagos([])
     setPagoMetodo('')
     setPagoMonto(total > 0 ? total.toFixed(2) : '')
+    setIsDidiMode(false)
+    setDidiMonto('')
     setShowPayment(true)
   }
 
@@ -189,6 +241,8 @@ export default function POS({ onIrAdmin, onNavigate }) {
     setPagos([])
     setPagoMetodo('')
     setPagoMonto('')
+    setIsDidiMode(false)
+    setDidiMonto('')
   }
 
   if (categorias.length === 0) {
@@ -200,6 +254,8 @@ export default function POS({ onIrAdmin, onNavigate }) {
           pantallaActual="caja"
           onNavigate={onNavigate}
           onJornadaChange={() => setJornada(getJornadaActual())}
+          modoAdmin={modoAdmin}
+          onDesactivarAdmin={onDesactivarAdmin}
         />
       </div>
     )
@@ -217,6 +273,8 @@ export default function POS({ onIrAdmin, onNavigate }) {
           pantallaActual="caja"
           onNavigate={onNavigate}
           onJornadaChange={() => setJornada(getJornadaActual())}
+          modoAdmin={modoAdmin}
+          onDesactivarAdmin={onDesactivarAdmin}
         />
       </div>
     )
@@ -261,32 +319,41 @@ export default function POS({ onIrAdmin, onNavigate }) {
             ))}
           </div>
 
-          {pendingItem && extrasCat.length > 0 && (
+          {pendingItem && (extrasCat.length > 0 || editingRow) && (
             <div className={styles.extrasPanel}>
-              <p className={styles.extrasTitle}>EXTRAS — {pendingItem.nombre}</p>
-              <div className={styles.extrasList}>
-                {extrasCat.map(e => {
-                  const qty = selectedExtras[e.id] || 0
-                  return (
-                    <div key={e.id} className={styles.extraRow}>
-                      <span className={styles.extraNombre}>{e.nombre}</span>
-                      <span className={styles.extraPrecio}>${e.precio}</span>
-                      <div className={styles.extraQtyCtrl}>
-                        <button className={styles.extraQtyBtn} onClick={() => handleChangeExtraCantidad(e.id, -1)}>-</button>
-                        <span className={styles.extraQtyNum}>{qty}</span>
-                        <button className={styles.extraQtyBtn} onClick={() => handleChangeExtraCantidad(e.id, 1)}>+</button>
+              <p className={styles.extrasTitle}>
+                {editingRow ? `Editar — ${pendingItem.nombre}` : `EXTRAS — ${pendingItem.nombre}`}
+              </p>
+              {extrasCat.length > 0 && (
+                <div className={styles.extrasList}>
+                  {extrasCat.map(e => {
+                    const qty = selectedExtras[e.id] || 0
+                    return (
+                      <div key={e.id} className={styles.extraRow}>
+                        <span className={styles.extraNombre}>{e.nombre}</span>
+                        <span className={styles.extraPrecio}>${e.precio}</span>
+                        <div className={styles.extraQtyCtrl}>
+                          <button className={styles.extraQtyBtn} onClick={() => handleChangeExtraCantidad(e.id, -1)}>-</button>
+                          <span className={styles.extraQtyNum}>{qty}</span>
+                          <button className={styles.extraQtyBtn} onClick={() => handleChangeExtraCantidad(e.id, 1)}>+</button>
+                        </div>
                       </div>
-                    </div>
-                  )
-                })}
-              </div>
+                    )
+                  })}
+                </div>
+              )}
               <input
                 className={styles.notaInput}
                 placeholder="Nota (opcional) — pan dorado, sin cebolla..."
                 value={nota}
                 onChange={e => setNota(e.target.value)}
               />
-              <button className={styles.agregarBtn} onClick={handleConfirmExtras}>Agregar</button>
+              <div className={styles.extrasPanelBtns}>
+                <button className={styles.cancelarBtn} onClick={handleCancelPending}>Cancelar</button>
+                <button className={styles.agregarBtn} onClick={handleConfirmExtras}>
+                  {editingRow ? 'Guardar' : 'Agregar'}
+                </button>
+              </div>
             </div>
           )}
         </div>
@@ -308,6 +375,7 @@ export default function POS({ onIrAdmin, onNavigate }) {
                 <span className={styles.rowPrice}>
                   ${comidaEmpleado ? 0 : getPrecioProducto(pendingItem) + extrasPrecioPreview}
                 </span>
+                <button className={styles.cancelPendingBtn} onClick={handleCancelPending}>✕</button>
               </div>
               {Object.entries(selectedExtras).length > 0 && (
                 <p className={styles.orderRowExtras}>
@@ -328,6 +396,7 @@ export default function POS({ onIrAdmin, onNavigate }) {
               <div key={row.uid} className={styles.orderRow}>
                 <div className={styles.orderRowMain}>
                   <span className={styles.orderRowName}>{row.producto.nombre}</span>
+                  <button className={styles.editBtn} onClick={() => handleEditItem(row)}>✎</button>
                   <div className={styles.qtyCtrl}>
                     <button className={styles.qtyBtn} onClick={() => handleChangeQty(row.uid, -1)}>-</button>
                     <span className={styles.qtyNum}>{row.qty}</span>
@@ -336,7 +405,7 @@ export default function POS({ onIrAdmin, onNavigate }) {
                   <span className={styles.orderRowPrice}>
                     ${comidaEmpleado ? '0.00' : row.subtotal.toFixed(2)}
                   </span>
-                  <button className={styles.delBtn} onClick={() => handleRemove(row.uid)}>x</button>
+                  <button className={styles.delBtn} onClick={() => handleRemove(row.uid)}>✕</button>
                 </div>
                 {row.extrasDetalle.length > 0 && (
                   <p className={styles.orderRowExtras}>
@@ -395,62 +464,98 @@ export default function POS({ onIrAdmin, onNavigate }) {
                 <p className={styles.modalTitle}>Cobro</p>
                 <p className={styles.modalTotal}>${total.toFixed(2)}</p>
 
-                {pagos.length > 0 && (
-                  <div className={styles.pagosLista}>
-                    {pagos.map((p, idx) => (
-                      <div key={idx} className={styles.pagoRow}>
-                        <span className={styles.pagoMetodo}>{p.metodo}</span>
-                        <span className={styles.pagoMonto}>${p.monto.toFixed(2)}</span>
-                        <button className={styles.pagoRemove} onClick={() => handleRemovePago(idx)}>x</button>
-                      </div>
-                    ))}
-                    <div className={styles.pagoResumen}>
-                      {pagoCubierto ? (
-                        cambio > 0 && (
-                          <div className={styles.cambioRow}>
-                            <span>Cambio</span>
-                            <span className={styles.cambioVal}>${cambio.toFixed(2)}</span>
+                {!isDidiMode ? (
+                  <>
+                    {pagos.length > 0 && (
+                      <div className={styles.pagosLista}>
+                        {pagos.map((p, idx) => (
+                          <div key={idx} className={styles.pagoRow}>
+                            <span className={styles.pagoMetodo}>{p.metodo}</span>
+                            <span className={styles.pagoMonto}>${p.monto.toFixed(2)}</span>
+                            <button className={styles.pagoRemove} onClick={() => handleRemovePago(idx)}>x</button>
                           </div>
-                        )
-                      ) : (
-                        <div className={styles.faltanteRow}>
-                          <span>Falta</span>
-                          <span className={styles.faltanteVal}>${faltante.toFixed(2)}</span>
+                        ))}
+                        <div className={styles.pagoResumen}>
+                          {pagoCubierto ? (
+                            cambio > 0 && (
+                              <div className={styles.cambioRow}>
+                                <span>Cambio</span>
+                                <span className={styles.cambioVal}>${cambio.toFixed(2)}</span>
+                              </div>
+                            )
+                          ) : (
+                            <div className={styles.faltanteRow}>
+                              <span>Falta</span>
+                              <span className={styles.faltanteVal}>${faltante.toFixed(2)}</span>
+                            </div>
+                          )}
                         </div>
-                      )}
-                    </div>
-                  </div>
-                )}
+                      </div>
+                    )}
 
-                {!pagoCubierto && (
-                  <div className={styles.agregarPagoRow}>
-                    <select
-                      className={styles.pagoSelect}
-                      value={pagoMetodo}
-                      onChange={e => setPagoMetodo(e.target.value)}
-                    >
-                      <option value="">Metodo</option>
-                      {metodosPago.map(m => (
-                        <option key={m.id} value={m.nombre}>{m.nombre}</option>
-                      ))}
-                    </select>
+                    {!pagoCubierto && (
+                      <div className={styles.agregarPagoRow}>
+                        <select
+                          className={styles.pagoSelect}
+                          value={pagoMetodo}
+                          onChange={e => setPagoMetodo(e.target.value)}
+                        >
+                          <option value="">Metodo</option>
+                          {metodosPago.map(m => (
+                            <option key={m.id} value={m.nombre}>{m.nombre}</option>
+                          ))}
+                        </select>
+                        <input
+                          className={styles.pagoInput}
+                          type="number"
+                          value={pagoMonto}
+                          onChange={e => setPagoMonto(e.target.value)}
+                          placeholder="0.00"
+                        />
+                        <button className={styles.pagoAddBtn} onClick={handleAgregarPago}>+</button>
+                      </div>
+                    )}
+
+                    {pagoCubierto && (
+                      <button className={styles.confirmBtn} onClick={handleConfirmPago}>
+                        Confirmar cobro
+                      </button>
+                    )}
+
+                    {!pagoCubierto && pagos.length === 0 && (
+                      <button
+                        className={styles.didiBtn}
+                        onClick={() => { setIsDidiMode(true); setDidiMonto(total.toFixed(2)) }}
+                      >
+                        DiDi Efectivo
+                      </button>
+                    )}
+
+                    <button className={styles.cancelBtn} onClick={handleClosePayment}>Cancelar</button>
+                  </>
+                ) : (
+                  <>
+                    <p className={styles.didiLabel}>Monto cobrado por DiDi</p>
                     <input
                       className={styles.pagoInput}
                       type="number"
-                      value={pagoMonto}
-                      onChange={e => setPagoMonto(e.target.value)}
+                      value={didiMonto}
+                      onChange={e => setDidiMonto(e.target.value)}
                       placeholder="0.00"
+                      autoFocus
                     />
-                    <button className={styles.pagoAddBtn} onClick={handleAgregarPago}>+</button>
-                  </div>
+                    <button
+                      className={styles.confirmBtn}
+                      onClick={handleConfirmDidi}
+                      disabled={!didiMonto || parseFloat(didiMonto) <= 0}
+                    >
+                      Confirmar cobro
+                    </button>
+                    <button className={styles.cancelBtn} onClick={() => setIsDidiMode(false)}>
+                      ← Volver
+                    </button>
+                  </>
                 )}
-
-                {pagoCubierto && (
-                  <button className={styles.confirmBtn} onClick={handleConfirmPago}>
-                    Confirmar cobro
-                  </button>
-                )}
-                <button className={styles.cancelBtn} onClick={handleClosePayment}>Cancelar</button>
               </>
             )}
           </div>
@@ -470,6 +575,8 @@ export default function POS({ onIrAdmin, onNavigate }) {
           pantallaActual="caja"
           onNavigate={onNavigate}
           onJornadaChange={() => setJornada(getJornadaActual())}
+          modoAdmin={modoAdmin}
+          onDesactivarAdmin={onDesactivarAdmin}
         />
       )}
     </div>
