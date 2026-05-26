@@ -328,10 +328,10 @@ export function getIngredientesBajos() {
   if (!data.ingredientes) return []
   return data.ingredientes.filter(i => {
     if (i.tipo === 'cantidad' || i.tipo === 'ambos') {
-      if ((i.cantidad || 0) <= (i.cantidadMin || 0)) return true
+      if (i.cantidadMin > 0 && (i.cantidad || 0) <= i.cantidadMin) return true
     }
     if (i.tipo === 'peso' || i.tipo === 'ambos') {
-      if ((i.peso || 0) <= (i.pesoMin || 0)) return true
+      if (i.pesoMin > 0 && (i.peso || 0) <= i.pesoMin) return true
     }
     return false
   })
@@ -362,6 +362,7 @@ export function getJornadaActual() {
 export function abrirJornada(fondoInicial = 0) {
   const data = load()
   if (!data.jornadas) data.jornadas = []
+  if (data.jornadas.some(j => !j.cerrada)) return
   data.jornadas.push({
     id: Date.now().toString(),
     turno: getTurnoActual(),

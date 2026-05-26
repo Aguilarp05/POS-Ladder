@@ -28,6 +28,7 @@ export default function POS({ onIrAdmin, onNavigate, modoAdmin, onDesactivarAdmi
   const [isDidiMode, setIsDidiMode] = useState(false)
   const [didiMonto, setDidiMonto] = useState('')
   const [editingRow, setEditingRow] = useState(null)
+  const [confirmandoLimpiar, setConfirmandoLimpiar] = useState(false)
 
   useEffect(() => {
     const cats = getCategorias()
@@ -176,6 +177,7 @@ export default function POS({ onIrAdmin, onNavigate, modoAdmin, onDesactivarAdmi
     setEsEmpleado(false)
     setComidaEmpleado(false)
     setEditingRow(null)
+    setConfirmandoLimpiar(false)
   }
 
   function handleAgregarPago() {
@@ -292,7 +294,7 @@ export default function POS({ onIrAdmin, onNavigate, modoAdmin, onDesactivarAdmi
               <button
                 key={c.id}
                 className={`${styles.catBtn} ${cat === c.id ? styles.catActive : ''}`}
-                onClick={() => { setCat(c.id); setPendingItem(null); setSelectedExtras({}); setNota('') }}
+                onClick={() => { setCat(c.id); setPendingItem(null); setSelectedExtras({}); setNota(''); setEditingRow(null) }}
               >
                 {c.nombre}
               </button>
@@ -365,7 +367,14 @@ export default function POS({ onIrAdmin, onNavigate, modoAdmin, onDesactivarAdmi
             <p className={styles.orderTitle}>Orden</p>
             <p className={styles.orderSubtitle}>{totalQty} {totalQty === 1 ? 'producto' : 'productos'}</p>
           </div>
-          <button className={styles.clearBtn} onClick={handleClear}>Limpiar</button>
+          {confirmandoLimpiar ? (
+            <div className={styles.clearConfirm}>
+              <button className={styles.clearConfirmSi} onClick={handleClear}>Sí</button>
+              <button className={styles.clearConfirmNo} onClick={() => setConfirmandoLimpiar(false)}>No</button>
+            </div>
+          ) : (
+            <button className={styles.clearBtn} onClick={() => setConfirmandoLimpiar(true)} disabled={order.length === 0}>Limpiar</button>
+          )}
         </div>
         <div className={styles.orderItems}>
           {pendingItem && (

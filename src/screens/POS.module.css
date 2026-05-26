@@ -289,9 +289,39 @@
   transition: all 0.15s;
 }
 
-.clearBtn:hover {
+.clearBtn:hover:not(:disabled) {
   border-color: var(--danger);
   color: var(--danger);
+}
+
+.clearBtn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.clearConfirm {
+  display: flex;
+  gap: 4px;
+}
+
+.clearConfirmSi {
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 0.5px solid var(--danger);
+  background: transparent;
+  color: var(--danger);
+  cursor: pointer;
+}
+
+.clearConfirmNo {
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 0.5px solid var(--border);
+  background: transparent;
+  color: var(--text-2);
+  cursor: pointer;
 }
 
 .orderItems {
